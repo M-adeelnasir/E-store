@@ -1,17 +1,14 @@
 import { Link } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from '../../components/navbar/Header';
 import { toast } from 'react-toastify';
 import { register } from '../../requests/user';
 
 
 const Register = () => {
-    // const [email, setEmail] = useState('adeelnasirkbw@gmail.com');
-    // const [name, setName] = useState('adeel nasir');
-    // const [password, setPassword] = useState('')
-    // const [confirmPassword, setConfirmPassword] = useState('')
     const [error, setError] = useState('')
     const [showhide, setShowhide] = useState(false)
+    const [loading, setLoding] = useState(false)
 
     const [values, setValues] = useState({ name: "", email: "", password: "", confirmPassword: "" })
 
@@ -28,16 +25,20 @@ const Register = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
         if (password !== confirmPassword) {
             setError("Password does not match")
             return
         }
+        setLoding(true)
         try {
             const { data } = await register(name, email, password)
             toast("Register Succesfull")
+            setLoding(false)
+            setShowhide(false)
             setValues({ ...values, name: "", password: "", email: "", confirmPassword: "" })
         } catch (err) {
-            console.log(err.response.data.msg);
+            setLoding(false)
             setError(err.response.data.msg)
         }
     }
@@ -59,7 +60,8 @@ const Register = () => {
         </div>
 
         {error && <div className="text-danger mt-0 mb-2" >{error}</div>}
-        <button disabled={!email} className="btn btn-primary m-auto w-100" type="submit">Register</button>
+
+        <button disabled={!email || !password || !confirmPassword} className="btn btn-primary m-auto w-100" type="submit">{loading ? <div class="spinner-border spinner-border-sm" > </div> : <span>Register</span>}</button>
     </form>
 
 
