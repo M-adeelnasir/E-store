@@ -2,6 +2,7 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const AWS = require('aws-sdk');
+const _ = require('lodash')
 
 
 exports.register = async (req, res) => {
@@ -156,7 +157,7 @@ exports.forgotPassword = async (req, res) => {
         }
 
         const token = jwt.sign({ name: user.name }, process.env.JWT_PRIVATE_KEY, { expiresIn: '20m' })
-        const resetLink = `${process.env.SERVER_URL}/auth/password/reset/${token}`
+        const resetLink = `${process.env.CLIENT_URL}/auth/password/reset/${token}`
 
         // const message = `Your password reset token is: \n\n ${resetLink} \n\n  click to reset your password`;
 
@@ -216,4 +217,80 @@ exports.forgotPassword = async (req, res) => {
         })
 
     })
+}
+
+
+exports.resetPassword = async (req, res) => {
+
+    try {
+        const { newPassword, confirmPassword } = req.body
+
+        if (!newPassword || !confirmPassword) {
+            return res.status(400).json({
+                success: false,
+                msg: "All fields are required"
+            })
+        }
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({
+                success: false,
+                msg: "Both fied should same password"
+            })
+        }
+
+        const { resetLink } = req.params;
+        if (!resetLink) {
+            return res.status(400).json({
+                success: false,
+                data: "No link"
+            })
+        }
+
+        try {
+            const token = jwt.verify(resetLink, process.env.JWT_PRIVATE_KEY)
+
+        } catch (err) {
+            res.status(400).json({
+                success: false,
+                data: "Expired or invalid Link"
+            })
+        }
+
+        let user = await User.findOne({ resetPasswordLink: resetLink })
+        if (!user) {
+            return res.status(400).json({
+                data: "Expired or invalid Link"
+            })
+        }
+
+        const updateFields = {
+            password: newPassword,
+            passwordResetLink: ""
+        }
+
+        user = _.extend(user, updateFields)
+
+        user.save((err, result) => {
+            if (err) {
+                console.log(err);
+                return res.status(400).json({
+                    success: false,
+                    data: "Reset password Faild, try later"
+                })
+            }
+            res.status(200).json({
+                success: true,
+                data: "Password Updated Successfully"
+            })
+        })
+
+
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({
+            success: false,
+            data: "Reset password Faild, try later"
+        })
+
+    }
 }
