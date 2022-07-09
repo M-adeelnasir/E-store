@@ -9,7 +9,7 @@ const App = () => {
   return (
 
     <>
-      <ToastContainer />
+      <ToastContainer position='top-center' />
       <Switch>
 
         <Route exact path='/' component={Home} />
