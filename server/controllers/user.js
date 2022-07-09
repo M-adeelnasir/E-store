@@ -152,7 +152,7 @@ exports.forgotPassword = async (req, res) => {
         if (!user || err) {
             return res.status(404).json({
                 success: false,
-                data: `No user found with ${email} Email`
+                msg: `No user found with ${email} Email`
             })
         }
 
@@ -165,7 +165,7 @@ exports.forgotPassword = async (req, res) => {
             if (err) {
                 return res.status(404).json({
                     success: false,
-                    data: "Reset passoward Failed"
+                    msg: "Reset passoward Failed"
                 })
             }
 
@@ -202,13 +202,13 @@ exports.forgotPassword = async (req, res) => {
                 res.json({
                     Success: true,
                     token: token,
-                    data: `Email has been sent to ${user.email}`
+                    msg: `Email has been sent to ${user.email}`
                 })
             }).catch(err => {
                 console.log(err);
                 res.status(400).json({
                     success: false,
-                    data: "Email sent failed try again with a Valid email"
+                    msg: "Email sent failed try again with a Valid email"
                 })
 
             })

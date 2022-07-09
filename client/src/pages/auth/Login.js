@@ -12,9 +12,6 @@ const Login = ({ history }) => {
     const [error, setError] = useState("")
     const [showhide, setShowhide] = useState(false)
 
-
-
-
     const handleLogin = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -58,11 +55,18 @@ const Login = ({ history }) => {
             <div className="container mt-3 col-md-4 ">
                 <div className="border p-5 ">
                     {form()}
-                    <div className='mt-3'>
-                        <span>No account? </span>
-                        <Link to='/register'>
-                            <span >Sign Up</span>
-                        </Link>
+                    <div className='d-flex justify-content-between'>
+                        <div className='mt-3'>
+                            <span>No account? </span>
+                            <Link to='/register'>
+                                <span >Sign Up</span>
+                            </Link>
+                        </div>
+                        <div className='mt-3 space-between'>
+                            <Link to='/forgotPassword'>
+                                <span className='text-danger' style={{ textDecoration: 'underline' }}>Forgot Password</span>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
