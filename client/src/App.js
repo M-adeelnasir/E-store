@@ -3,7 +3,7 @@ import { Switch, Route, useHistory } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
 import Register from './pages/auth/Register'
 import Home from './pages/Home';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Login from './pages/auth/Login';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';

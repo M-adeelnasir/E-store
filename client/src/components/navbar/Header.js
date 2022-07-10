@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Menu, Badge } from 'antd';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { logoutUser } from '../../requests/user';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom'
 import { SettingOutlined } from '@ant-design/icons';
 const { SubMenu } = Menu;
 
@@ -13,7 +15,26 @@ const Header = () => {
         setCurrent(e.key)
     }
 
+    const dispatch = useDispatch()
+    const history = useHistory()
     const { user } = useSelector((state) => ({ ...state }))
+
+    const handleLogout = async () => {
+
+        try {
+            history.push('/login')
+            dispatch({
+                type: 'LOGGED_OUT',
+                payload: null
+            })
+
+            window.localStorage.removeItem('user')
+            await logoutUser()
+        } catch (err) {
+            toast("Log out failed")
+        }
+
+    }
 
 
     return (
@@ -38,20 +59,24 @@ const Header = () => {
                     <i className="fa fa-shopping-basket pr-1">
                     </i> <Link to='/shop'>Shop</Link>
                 </Menu.Item>
-                {/* <SubMenu key="SubMenu" icon={<SettingOutlined />} title="title">
+                {user && <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.name ? user.name.split(' ')[0] : user.email.split('@')[0]}>
+                    <Menu.Item>
+                        <i className="fa fa-th-large"></i>Dashbord</Menu.Item>
+                    <Menu.Item onClick={handleLogout}><i className="fa fa-sign-in pr-2 "></i>Logout</Menu.Item>
 
-                 
-                </SubMenu> */}
-                <Menu.Item key="register" className='flr'>
+                </SubMenu>}
+
+                {!user && (<Menu.Item key="register" className='flr'>
                     <i className="fa fa-user-plus pr-1 "></i>
                     <Link to='/register'>Register</Link>
-                </Menu.Item>
+                </Menu.Item>)}
 
-                <Menu.Item key="login" className='flr' >
+
+                {!user && <Menu.Item key="login" className='flr' >
 
                     <i className="fa fa-sign-in pr-2 "></i>
                     <Link to='/login'>Login</Link>
-                </Menu.Item>
+                </Menu.Item>}
 
             </Menu>
         </>

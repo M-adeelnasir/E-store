@@ -19,3 +19,7 @@ export const resetPassword = async (newPassword, confirmPassword, resetToken) =>
 export const currentUser = async (token) => {
     return await axios.post(`${process.env.REACT_APP_BACKENED_REQUEST}/user/current`, { token })
 }
+
+export const logoutUser = async () => {
+    return await axios.get(`${process.env.REACT_APP_BACKENED_REQUEST}/logout`)
+}

@@ -132,7 +132,7 @@ const sendToken = async (res, statutsCode, user) => {
         .cookie("token", token, options)
         .json({
             success: true,
-            data: { name: user.name, email: user.email, _id: user._id, token }
+            data: { name: user.name, email: user.email, _id: user._id, token, role: user.role }
         })
 }
 
