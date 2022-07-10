@@ -234,7 +234,7 @@ exports.resetPassword = async (req, res) => {
         if (newPassword !== confirmPassword) {
             return res.status(400).json({
                 success: false,
-                msg: "Both fied should same password"
+                msg: "Password does not match"
             })
         }
 
@@ -242,7 +242,7 @@ exports.resetPassword = async (req, res) => {
         if (!resetLink) {
             return res.status(400).json({
                 success: false,
-                data: "No link"
+                msg: "No link"
             })
         }
 
@@ -252,14 +252,14 @@ exports.resetPassword = async (req, res) => {
         } catch (err) {
             res.status(400).json({
                 success: false,
-                data: "Expired or invalid Link"
+                msg: "Expired or invalid Link"
             })
         }
 
         let user = await User.findOne({ resetPasswordLink: resetLink })
         if (!user) {
             return res.status(400).json({
-                data: "Expired or invalid Link"
+                msg: "Expired or invalid Link"
             })
         }
 
@@ -275,12 +275,13 @@ exports.resetPassword = async (req, res) => {
                 console.log(err);
                 return res.status(400).json({
                     success: false,
-                    data: "Reset password Faild, try later"
+                    msg: "Reset password Faild, try later"
                 })
             }
+
             res.status(200).json({
                 success: true,
-                data: "Password Updated Successfully"
+                msg: "Password Updated Successfully",
             })
         })
 
@@ -289,7 +290,7 @@ exports.resetPassword = async (req, res) => {
         console.log(err);
         res.status(400).json({
             success: false,
-            data: "Reset password Faild, try later"
+            msg: "Reset password Faild, try later"
         })
 
     }

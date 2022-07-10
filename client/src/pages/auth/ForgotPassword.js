@@ -30,7 +30,6 @@ const ForgotPassword = () => {
         <button disabled={!email} className="btn btn-primary m-auto w-100" type="submit">{loading ? <div className="spinner-border spinner-border-sm" > </div> : <span>Submit</span>}</button>
     </form>
 
-
     return (
         <>
             <Header />

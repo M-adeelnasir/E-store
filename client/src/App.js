@@ -5,6 +5,7 @@ import Register from './pages/auth/Register'
 import Home from './pages/Home';
 import Login from './pages/auth/Login';
 import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Register} />
         <Route exact path='/forgotPassword' component={ForgotPassword} />
+        <Route exact path='/auth/password/reset/:resetToken' component={ResetPassword} />
 
 
       </Switch>
