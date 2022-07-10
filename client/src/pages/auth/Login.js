@@ -6,8 +6,8 @@ import { toast } from 'react-toastify'
 
 const Login = ({ history }) => {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState("adeelnasirkbw@gmail.com");
+    const [password, setPassword] = useState('adeelnasir');
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [showhide, setShowhide] = useState(false)
@@ -24,10 +24,7 @@ const Login = ({ history }) => {
         } catch (err) {
             setError(err.response.data.msg)
             setLoading(false)
-
-
         }
-
     }
 
     const form = () => (<form onSubmit={handleLogin} >
@@ -42,9 +39,8 @@ const Login = ({ history }) => {
         </div>
         {error && <div className="text-danger mt-0 mb-2" >{error}</div>}
 
-        <button disabled={!email || !password} className="btn btn-primary m-auto w-100" type="submit">{loading ? <div class="spinner-border spinner-border-sm" > </div> : <span>Login</span>}</button>
+        <button disabled={!email || !password} className="btn btn-primary m-auto w-100" type="submit">{loading ? <div className="spinner-border spinner-border-sm" > </div> : <span>Login</span>}</button>
     </form>)
-
 
 
     return (
