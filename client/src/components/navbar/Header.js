@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Menu, Badge } from 'antd';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { SettingOutlined } from '@ant-design/icons';
 const { SubMenu } = Menu;
@@ -12,6 +13,7 @@ const Header = () => {
         setCurrent(e.key)
     }
 
+    const { user } = useSelector((state) => ({ ...state }))
 
 
     return (

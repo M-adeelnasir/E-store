@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/navbar/Header';
 import { login } from '../../requests/user';
 import { toast } from 'react-toastify'
+import { useSelector, useDispatch } from 'react-redux';
 
 const Login = ({ history }) => {
 
@@ -12,13 +13,24 @@ const Login = ({ history }) => {
     const [error, setError] = useState("")
     const [showhide, setShowhide] = useState(false)
 
+    const { user } = useSelector((state) => ({ ...state }))
+    const dispatch = useDispatch()
+
     const handleLogin = async (e) => {
         e.preventDefault()
         setLoading(true)
+
         try {
             const { data: user } = await login(email, password)
             setLoading(false)
             setShowhide(false)
+            if (typeof window !== 'undefined') {
+                window.localStorage.setItem("user", JSON.stringify(user.data))
+            }
+            dispatch({
+                type: 'LOGGED_IN',
+                payload: user.data
+            })
             toast("Logged In Successful")
             history.push('/')
         } catch (err) {

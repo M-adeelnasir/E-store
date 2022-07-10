@@ -295,3 +295,28 @@ exports.resetPassword = async (req, res) => {
 
     }
 }
+
+
+exports.currentUser = async (req, res) => {
+    const { token } = req.body;
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_PRIVATE_KEY)
+
+        if (decoded) {
+            const { _id } = decoded
+            const user = await User.findById({ _id })
+            res.json({
+                success: true,
+                data: user
+            })
+        }
+
+    } catch (err) {
+
+        res.status(401).json({
+            success: false,
+            msg: "Authrization failed No token found"
+        })
+
+    }
+}
