@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Header from '../../components/navbar/Header';
 import { login } from '../../requests/user';
@@ -38,6 +38,14 @@ const Login = ({ history }) => {
             setLoading(false)
         }
     }
+
+    const userExits = window.localStorage.getItem('user')
+    useEffect(() => {
+        if (userExits && userExits !== null) {
+            history.push('/')
+        }
+    }, [userExits])
+
 
     const form = () => (<form onSubmit={handleLogin} >
         <input type="email" className="form-control mb-4" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />

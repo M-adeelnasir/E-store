@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../../components/navbar/Header';
 import { toast } from 'react-toastify';
 import { register } from '../../requests/user';
 
 
-const Register = () => {
+const Register = ({ history }) => {
     const [error, setError] = useState('')
     const [showhide, setShowhide] = useState(false)
     const [loading, setLoding] = useState(false)
@@ -43,6 +43,12 @@ const Register = () => {
         }
     }
 
+    const userExits = window.localStorage.getItem('user')
+    useEffect(() => {
+        if (userExits && userExits !== null) {
+            history.push('/')
+        }
+    }, [userExits])
 
 
     const form = () => <form onSubmit={handleRegister} >

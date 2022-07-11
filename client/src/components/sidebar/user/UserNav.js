@@ -28,7 +28,8 @@ const UserNav = () => {
                         <p className="title">USER</p>
                         <li >
                             <EyeOutlined className='icon' />
-                            <span>Profile</span>
+                            <Link to='/user/profile'><span>Update Profile</span></Link>
+
                         </li>
                         <li >
                             <UserOutlined className='icon' />

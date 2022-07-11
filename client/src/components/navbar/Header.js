@@ -19,6 +19,7 @@ const Header = () => {
     const history = useHistory()
     const { user } = useSelector((state) => ({ ...state }))
 
+
     const handleLogout = async () => {
 
         try {
@@ -59,8 +60,7 @@ const Header = () => {
                     <i className="fa fa-shopping-basket pr-1">
                     </i> <Link to='/shop'>Shop</Link>
                 </Menu.Item>
-                {user && <SubMenu key="SubMenu" icon={<SettingOutlined />} title="ME" >
-
+                {user && <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email.split('@')[0]} >
 
                     {user && user.role === "user" && <Menu.Item> <i className="fa fa-th-large"></i><Link to='/user/history'>Dashboard</Link>
                     </Menu.Item>}
@@ -71,17 +71,21 @@ const Header = () => {
 
                 </SubMenu>}
 
-                {!user && (<Menu.Item key="register" className='flr'>
-                    <i className="fa fa-user-plus pr-1 "></i>
-                    <Link to='/register'>Register</Link>
-                </Menu.Item>)}
+                {
+                    !user && <>
+                        {!user && (<Menu.Item key="register" className='flr'>
+                            <i className="fa fa-user-plus pr-1 "></i>
+                            <Link to='/register'>Register</Link>
+                        </Menu.Item>)}
 
 
-                {!user && <Menu.Item key="login" className='flr' >
+                        {!user && <Menu.Item key="login" className='flr' >
 
-                    <i className="fa fa-sign-in pr-2 "></i>
-                    <Link to='/login'>Login</Link>
-                </Menu.Item>}
+                            <i className="fa fa-sign-in pr-2 "></i>
+                            <Link to='/login'>Login</Link>
+                        </Menu.Item>}
+                    </>
+                }
 
             </Menu>
         </>

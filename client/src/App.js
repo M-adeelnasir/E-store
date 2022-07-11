@@ -9,6 +9,7 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import { currentUser } from './requests/user'
 import UserHistory from './pages/user/UserHistory';
+import Profile from './pages/user/profile/Profile';
 
 
 
@@ -48,6 +49,7 @@ const App = () => {
         <Route exact path='/forgotPassword' component={ForgotPassword} />
         <Route exact path='/auth/password/reset/:resetToken' component={ResetPassword} />
         <Route exact path='/user/history' component={UserHistory} />
+        <Route exact path='/user/profile' component={Profile} />
 
       </Switch>
 

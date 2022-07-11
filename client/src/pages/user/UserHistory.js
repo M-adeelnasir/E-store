@@ -16,7 +16,6 @@ const UserHistory = () => {
                     </div>
                 </div>
             </div>
-
         </>
     )
 }
