@@ -8,6 +8,7 @@ import Login from './pages/auth/Login';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import { currentUser } from './requests/user'
+import UserHistory from './pages/user/UserHistory';
 
 
 
@@ -46,7 +47,7 @@ const App = () => {
         <Route exact path='/register' component={Register} />
         <Route exact path='/forgotPassword' component={ForgotPassword} />
         <Route exact path='/auth/password/reset/:resetToken' component={ResetPassword} />
-
+        <Route exact path='/user/history' component={UserHistory} />
 
       </Switch>
 
