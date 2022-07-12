@@ -60,7 +60,7 @@ const Header = () => {
                     <i className="fa fa-shopping-basket pr-1">
                     </i> <Link to='/shop'>Shop</Link>
                 </Menu.Item>
-                {user && <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email.split('@')[0]} >
+                {user && <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Me" >
 
                     {user && user.role === "user" && <Menu.Item> <i className="fa fa-th-large"></i><Link to='/user/history'>Dashboard</Link>
                     </Menu.Item>}

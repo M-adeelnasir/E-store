@@ -24,6 +24,7 @@ const App = () => {
     try {
       const { data } = await currentUser(token)
       const user = data.data
+      console.log(user)
       dispatch({
         type: 'LOGGED_IN',
         payload: user

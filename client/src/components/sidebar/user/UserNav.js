@@ -7,6 +7,10 @@ const UserNav = () => {
     return (
         <>
             <div className="sidebar">
+                <div className="top">
+                    <span className='logo text-primary'>E-Buy</span>
+                </div>
+                <hr className='hr' />
                 <div className="center">
                     <ul>
                         <p className="title">MAIN</p>

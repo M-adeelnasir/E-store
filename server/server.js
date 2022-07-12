@@ -6,6 +6,7 @@ const colors = require('colors');
 const connectDB = require('./config/db')
 const fs = require('fs')
 const routes = fs.readdirSync('./routes')
+const cookieParser = require('cookie-parser');
 
 
 
@@ -20,6 +21,7 @@ if (NODE_ENV === "development") {
 connectDB()
 app.use(express.json())
 app.use(cors())
+app.use(cookieParser());
 
 
 routes.map(r => app.use('/api/v1', require('./routes/' + r)))

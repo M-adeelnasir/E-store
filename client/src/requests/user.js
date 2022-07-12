@@ -23,3 +23,11 @@ export const currentUser = async (token) => {
 export const logoutUser = async () => {
     return await axios.get(`${process.env.REACT_APP_BACKENED_REQUEST}/logout`)
 }
+
+export const getUserProfile = async (authToken) => {
+    return await axios.get(`${process.env.REACT_APP_BACKENED_REQUEST}/user/profile`, {
+        headers: {
+            "Authorization": `Bearer ${authToken}`
+        }
+    })
+}

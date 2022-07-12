@@ -132,7 +132,7 @@ const sendToken = async (res, statutsCode, user) => {
         .cookie("token", token, options)
         .json({
             success: true,
-            data: { name: user.name, email: user.email, _id: user._id, token, role: user.role }
+            data: { name: user.name, email: user.email, _id: user._id, token, role: user.role, token }
         })
 }
 
@@ -298,21 +298,21 @@ exports.resetPassword = async (req, res) => {
 
 
 exports.currentUser = async (req, res) => {
-    const { token } = req.body;
+    const token = req.token
     try {
         const decoded = jwt.verify(token, process.env.JWT_PRIVATE_KEY)
-
         if (decoded) {
             const { _id } = decoded
             const user = await User.findById({ _id })
             res.json({
                 success: true,
-                data: user
+                data: { name: user.name, email: user.email, _id: user._id, token, role: user.role, token, phone: user.phone, address: user.address }
+
             })
         }
 
     } catch (err) {
-
+        console.log(err);
         res.status(401).json({
             success: false,
             msg: "Authrization failed No token found"

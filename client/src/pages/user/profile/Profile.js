@@ -3,10 +3,12 @@ import './new.scss'
 import UserNav from '../../../components/sidebar/user/UserNav'
 import Header from '../../../components/navbar/Header'
 import { CloudUploadOutlined, EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
-
+import { getUserProfile } from '../../../requests/user'
+import { useSelector } from 'react-redux'
 
 
 const Profile = () => {
+
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -15,9 +17,22 @@ const Profile = () => {
     const [address, setAddress] = useState('')
     const [hidden, setHidden] = useState(true)
 
+    const { user } = useSelector((state) => ({ ...state }))
 
 
 
+    const getUser = async (token) => {
+        try {
+            const { data } = await getUserProfile(token)
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        getUser(user.token)
+    }, [])
 
 
     return (
