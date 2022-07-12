@@ -64,7 +64,7 @@ const Header = () => {
 
                     {user && user.role === "user" && <Menu.Item> <i className="fa fa-th-large"></i><Link to='/user/history'>Dashboard</Link>
                     </Menu.Item>}
-                    {user && user.role === "admin" && <Menu.Item> <i className="fa fa-th-large"></i><Link to='/user/admin'>Dashboard</Link>
+                    {user && user.role === "admin" && <Menu.Item> <i className="fa fa-th-large"></i><Link to='/admin/dashboard'>Dashboard</Link>
                     </Menu.Item>}
 
                     <Menu.Item onClick={handleLogout}><i className="fa fa-sign-in pr-2 "></i>Logout</Menu.Item>

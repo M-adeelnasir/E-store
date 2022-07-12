@@ -7,14 +7,14 @@ import { useDispatch } from 'react-redux';
 import Login from './pages/auth/Login';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import ResetPassword from './pages/auth/ResetPassword';
-import { currentUser } from './requests/user'
+import { getUserProfile } from './requests/user'
 import UserHistory from './pages/user/UserHistory';
 import Profile from './pages/user/profile/Profile';
+import Dashboard from './pages/admin/Dashboard';
 
 
 
 const App = () => {
-
 
   let { token } = JSON.parse(window.localStorage.getItem("user")) || 1
 
@@ -22,7 +22,7 @@ const App = () => {
   const history = useHistory()
   const checkUser = async (token) => {
     try {
-      const { data } = await currentUser(token)
+      const { data } = await getUserProfile(token)
       const user = data.data
       console.log(user)
       dispatch({
@@ -33,10 +33,10 @@ const App = () => {
       history.push('/login')
     }
   }
-
   useEffect(() => {
+    console.log("tokkeee")
     checkUser(token)
-  }, [])
+  }, [token])
 
   return (
 
@@ -51,7 +51,7 @@ const App = () => {
         <Route exact path='/auth/password/reset/:resetToken' component={ResetPassword} />
         <Route exact path='/user/history' component={UserHistory} />
         <Route exact path='/user/profile' component={Profile} />
-
+        <Route exact path='/admin/dashboard' component={Dashboard} />
       </Switch>
 
     </>

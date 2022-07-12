@@ -9,7 +9,6 @@ router.post('/login', login)
 router.get('/logout', logout)
 router.post('/forgot/password', forgotPassword)
 router.post('/password/reset/:resetLink', resetPassword)
-router.post('/user/current', currentUser)
 router.get('/user/profile', verifyJwt, checkAuth, currentUser)
 
 module.exports = router

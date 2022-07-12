@@ -22,8 +22,6 @@ exports.verifyJwt = async (req, res, next) => {
     }
 }
 
-
-
 exports.checkAuth = async (req, res, next) => {
     try {
         const { _id } = req.user;

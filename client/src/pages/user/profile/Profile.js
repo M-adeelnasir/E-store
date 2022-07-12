@@ -17,22 +17,33 @@ const Profile = () => {
     const [address, setAddress] = useState('')
     const [hidden, setHidden] = useState(true)
 
-    const { user } = useSelector((state) => ({ ...state }))
+    let { token } = JSON.parse(window.localStorage.getItem("user")) || 1
+
+
 
 
 
     const getUser = async (token) => {
         try {
             const { data } = await getUserProfile(token)
+            const { data: user } = data
+            console.log(user);
 
+            setName(user.name)
+            setPassword(user.password)
+            setEmail(user.email)
+            setAddress(user.address || "")
+            setPhone(user.phone || "")
         } catch (err) {
             console.log(err);
         }
     }
 
     useEffect(() => {
-        getUser(user.token)
-    }, [])
+        if (token) {
+            getUser(token)
+        }
+    }, [token])
 
 
     return (
