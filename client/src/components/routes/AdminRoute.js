@@ -14,24 +14,24 @@ const AdminRoute = ({ children, ...rest }) => {
     const current = async (token) => {
         try {
             const { data } = await currentAdmin(token)
-            console.log("CURRENT ADMIN", data);
+            // console.log("CURRENT ADMIN", data);
             setOk(true)
         } catch (err) {
-            console.log("CURRENT ADMIN ERROR", err);
+            // console.log("CURRENT ADMIN ERROR", err);
             setOk(false)
         }
     }
 
     useEffect(() => {
+        console.log(user);
         if (user && user !== null && user.token) {
-            console.log(user);
             current(user.token)
         }
     }, [user])
 
     return (
         <>
-            {!ok ? (
+            {ok ? (
                 <Route {...rest} render={() => children} />
             ) : <LoadingRedirect />}
         </>

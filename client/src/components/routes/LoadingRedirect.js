@@ -15,7 +15,6 @@ const LoadingRedirect = () => {
     }, [count, history])
     return (
         <>
-
             <div style={{ height: '100vh', display: 'flex', alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
 
                 <Spiner />

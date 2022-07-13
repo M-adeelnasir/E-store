@@ -29,14 +29,14 @@ const App = () => {
       const user = data.data
       dispatch({
         type: 'LOGGED_IN',
-        payload: user
+        payload: { token, ...user }
       })
     } catch (err) {
       history.push('/login')
     }
   }
-  useEffect((token) => {
-    checkUser()
+  useEffect(() => {
+    checkUser(token)
   }, [token])
 
   return (
@@ -50,10 +50,11 @@ const App = () => {
         <Route exact path='/register' component={Register} />
         <Route exact path='/forgotPassword' component={ForgotPassword} />
         <Route exact path='/auth/password/reset/:resetToken' component={ResetPassword} />
-        <Route exact path='/user/history' component={UserHistory} />
-        <Route exact path='/user/profile' component={Profile} />
-        {/* <AdminRoute><Route exact path='/admin/dashboard' component={Dashboard} /></AdminRoute> */}
-        <AdminRoute exact path="/admin/dashboard"><Dashboard /></AdminRoute>
+        <AdminRoute><Route exact path='/admin/dashboard' component={Dashboard} /></AdminRoute>
+        <UserRoute><Route exact path='/user/history' component={UserHistory} /></UserRoute>
+        <UserRoute> <Route exact path='/user/profile' component={Profile} /></UserRoute>
+        {/* <AdminRoute exact path='/admin/dashboard'><Dashboard /></AdminRoute> */}
+
       </Switch>
 
     </>

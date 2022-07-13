@@ -5,7 +5,7 @@ import AdminNav from '../../components/sidebar/admin/AdminNav'
 const Dashboard = () => {
     return (
         <>
-            <div className="conatiner-fluid">
+            <div className="container-fluid">
 
                 <div className="row ">
                     <div className="col-md-2 d-flex p-0">
