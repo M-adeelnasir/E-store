@@ -31,3 +31,10 @@ export const getUserProfile = async (authToken) => {
         }
     })
 }
+export const currentAdmin = async (authToken) => {
+    return await axios.get(`${process.env.REACT_APP_BACKENED_REQUEST}/current-admin`, {
+        headers: {
+            "Authorization": `Bearer ${authToken}`
+        }
+    })
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Menu, Badge } from 'antd';
 import { toast } from 'react-toastify'
 import { logoutUser } from '../../requests/user';
@@ -18,6 +18,7 @@ const Header = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const { user } = useSelector((state) => ({ ...state }))
+
 
 
     const handleLogout = async () => {

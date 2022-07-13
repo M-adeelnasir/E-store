@@ -9,20 +9,12 @@ const Register = ({ history }) => {
     const [error, setError] = useState('')
     const [showhide, setShowhide] = useState(false)
     const [loading, setLoding] = useState(false)
-
     const [values, setValues] = useState({ name: "", email: "", password: "", confirmPassword: "" })
-
     const { name, email, password, confirmPassword } = values
-
-
-
-
     const handleChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value })
         setError("")
     }
-
-
     const handleRegister = async (e) => {
         e.preventDefault();
 

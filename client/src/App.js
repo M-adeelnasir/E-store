@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { Switch, Route, useHistory } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify';
+import AdminRoute from './components/routes/AdminRoute';
+import UserRoute from './components/routes/UserRoute';
 import Register from './pages/auth/Register'
 import Home from './pages/Home';
 import { useDispatch } from 'react-redux';
@@ -14,17 +16,17 @@ import Dashboard from './pages/admin/Dashboard';
 
 
 
+
 const App = () => {
 
   let { token } = JSON.parse(window.localStorage.getItem("user")) || 1
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch(token)
   const history = useHistory()
-  const checkUser = async (token) => {
+  const checkUser = async () => {
     try {
       const { data } = await getUserProfile(token)
       const user = data.data
-      console.log(user)
       dispatch({
         type: 'LOGGED_IN',
         payload: user
@@ -33,9 +35,8 @@ const App = () => {
       history.push('/login')
     }
   }
-  useEffect(() => {
-    console.log("tokkeee")
-    checkUser(token)
+  useEffect((token) => {
+    checkUser()
   }, [token])
 
   return (
@@ -51,7 +52,8 @@ const App = () => {
         <Route exact path='/auth/password/reset/:resetToken' component={ResetPassword} />
         <Route exact path='/user/history' component={UserHistory} />
         <Route exact path='/user/profile' component={Profile} />
-        <Route exact path='/admin/dashboard' component={Dashboard} />
+        {/* <AdminRoute><Route exact path='/admin/dashboard' component={Dashboard} /></AdminRoute> */}
+        <AdminRoute exact path="/admin/dashboard"><Dashboard /></AdminRoute>
       </Switch>
 
     </>

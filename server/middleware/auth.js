@@ -1,8 +1,9 @@
 // const expressJwt = require('express-jwt');
-const User = require('../models/user')
+const User = require('../model/user')
+const expressJwt = require('express-jwt')
 const jwt = require('jsonwebtoken')
 
-// exports.requireSignIn = expressJwt({ getToken: (req, res) => console.log(req.cookie), secret: process.env.JWT_PRIVATE_KEY, algorithms: ['sha1', 'RS256', 'HS256'] })
+// exports.requireSignIn = expressJwt({ getToken: (req, res) => { console.log("Cookie Error", req.cookies); return req.cookies.token }, secret: process.env.JWT_PRIVATE_KEY, algorithms: ["HS256"] })
 // req.user
 
 exports.verifyJwt = async (req, res, next) => {
@@ -14,7 +15,6 @@ exports.verifyJwt = async (req, res, next) => {
     try {
         const user = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
         req.user = user;
-        req.token = token
         next();
     } catch (err) {
         console.log(err);
@@ -45,7 +45,7 @@ exports.checkAuth = async (req, res, next) => {
     }
 }
 
-exports.checkAdmin = async (req, res) => {
+exports.checkAdmin = async (req, res, next) => {
     try {
         const { _id } = req.user;
         const user = await User.findById({ _id })

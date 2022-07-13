@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../model/user');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const AWS = require('aws-sdk');
@@ -90,7 +90,6 @@ exports.login = async (req, res) => {
 
         sendToken(res, 200, user)
 
-
     } catch (err) {
         res.status(500).json({
             success: false,
@@ -121,19 +120,18 @@ exports.logout = async (req, res) => {
 
 const sendToken = async (res, statutsCode, user) => {
 
-    const token = await user.userToken()
+    const token = await user.userToken();
 
     const options = {
         expires: new Date(Date.now() + process.env.JWT_TOKEN_COOKIE_EXPIRES * 24 * 12 * 60 * 1000),
         httpOnly: true
     }
 
-    res.status(statutsCode)
-        .cookie("token", token, options)
-        .json({
-            success: true,
-            data: { name: user.name, email: user.email, _id: user._id, token, role: user.role, token }
-        })
+    res.status(statutsCode).cookie('token', token, options).json({
+        success: true,
+        data: { name: user.name, email: user.email, role: user.role, _id: user._id, token: token },
+        msg: "Logged In"
+    })
 }
 
 
@@ -298,18 +296,21 @@ exports.resetPassword = async (req, res) => {
 
 
 exports.currentUser = async (req, res) => {
-    const token = req.token
     try {
-        const decoded = jwt.verify(token, process.env.JWT_PRIVATE_KEY)
-        if (decoded) {
-            const { _id } = decoded
-            const user = await User.findById({ _id })
-            res.json({
-                success: true,
-                data: { name: user.name, email: user.email, _id: user._id, token, role: user.role, token, phone: user.phone, address: user.address }
 
+        const { _id } = req.user
+        const user = await User.findById({ _id }).select("-password")
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                msg: "No user found"
             })
         }
+        res.json({
+            success: true,
+            data: user
+        })
+
 
     } catch (err) {
         console.log(err);
@@ -320,6 +321,7 @@ exports.currentUser = async (req, res) => {
 
     }
 }
+
 
 
 
