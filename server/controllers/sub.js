@@ -1,23 +1,20 @@
 const Category = require('../model/category')
-const slugify = require('slugify')
 const Sub = require('../model/sub')
-const Product = require('../model/product')
-
-
+const slugify = require('slugify')
 
 exports.create = async (req, res) => {
     try {
         const { name } = req.body
-        const category = await Category.create({ name });
-        if (!category) {
+        const sub = await Sub.create({ name });
+        if (!sub) {
             return res.status(404).json({
                 success: false,
-                msg: "Category create fiailed! Try later"
+                msg: "sub category create fiailed! Try later"
             })
         }
         res.status(201).json({
             success: true,
-            data: category
+            data: sub
         })
     } catch (err) {
         console.log(err);
@@ -28,20 +25,21 @@ exports.create = async (req, res) => {
     }
 }
 
-exports.getCategory = async (req, res) => {
+
+exports.getSub = async (req, res) => {
     try {
         const slug = req.params
-        const category = await Category.findOne(slug)
-        if (!category) {
+        const sub = await Sub.findOne(slug)
+        if (!sub) {
             return res.status(404).json({
                 success: false,
-                msg: "No category found"
+                msg: "No sub category found"
             })
         }
 
         res.json({
             success: true,
-            data: category
+            data: sub
         })
     } catch (err) {
         console.log(err);
@@ -52,12 +50,13 @@ exports.getCategory = async (req, res) => {
     }
 }
 
-exports.categories = async (req, res) => {
+
+exports.subs = async (req, res) => {
     try {
-        const categories = await Category.find({}).sort({ createdAt: -1 })
+        const subs = await Sub.find({}).sort({ createdAt: -1 })
         res.json({
             success: true,
-            data: categories
+            data: subs
         })
     } catch (err) {
         console.log(err);
@@ -67,13 +66,14 @@ exports.categories = async (req, res) => {
         })
     }
 }
+
 
 exports.update = async (req, res) => {
     try {
         const { slug } = req.params
         const { name } = req.body
-        const category = await Category.findOneAndUpdate(slug, { name, slug: slugify(name) }, { new: true, runValidators: true })
-        if (!category) {
+        const sub = await Sub.findOneAndUpdate(slug, { name, slug: slugify(name) }, { new: true, runValidators: true })
+        if (!sub) {
             return res.status(404).json({
                 success: false,
                 msg: "No category found"
@@ -81,7 +81,7 @@ exports.update = async (req, res) => {
         }
         res.json({
             success: true,
-            data: category
+            data: sub
         })
 
     } catch (err) {
@@ -93,19 +93,21 @@ exports.update = async (req, res) => {
     }
 }
 
-exports.deleteCategory = async (req, res) => {
+
+
+exports.deleteSub = async (req, res) => {
     try {
         const { id } = req.body
-        const category = await Category.findByIdAndDelete({ _id: id })
-        if (!category) {
+        const sub = await Sub.findByIdAndDelete({ _id: id })
+        if (!sub) {
             return res.status(404).json({
                 success: false,
-                msg: "No category found"
+                msg: "No sub category found"
             })
         }
         res.json({
             success: true,
-            msg: "category deleted"
+            msg: " Sub category deleted"
         })
     } catch (err) {
         console.log(err);
@@ -116,35 +118,22 @@ exports.deleteCategory = async (req, res) => {
     }
 }
 
-
-
-exports.getProducts = async (req, res) => {
+exports.getSubsOnCategory = async (req, res) => {
     try {
-        const { slug } = req.params;
-        const category = await Category.findOne(slug)
-        if (!category) {
-            res.status(404).json({
-                success: flase,
-                data: {}
-            })
-        }
-
-        const products = await Product.find({ category: category._id }).populate('category')
+        const { id } = req.params;
+        const subs = await Sub.find({ _id: id })
         res.status(200).json({
             success: true,
-            data: category,
-            products
+            data: subs
         })
-        console.log(err);
-        res.status(401).json({
-            success: false,
-            data: {}
-        })
+
     } catch (err) {
-        console.log(err);
+        console.log(sub);
         res.status(500).json({
             success: false,
-            msg: 'SERVER ERROR'
+            msg: "No sub category found"
         })
     }
 }
+
+

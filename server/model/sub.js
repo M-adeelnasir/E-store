@@ -27,4 +27,4 @@ subSchema.pre('save', function (next) {
     next();
 })
 
-module.exports = mongoose.Schema("Sub", subSchema)
+module.exports = mongoose.model("Sub", subSchema)
