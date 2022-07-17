@@ -22,4 +22,9 @@ const subSchema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
+subSchema.pre('save', function (next) {
+    this.slug = slugify(this.name, { lower: true })
+    next();
+})
+
 module.exports = mongoose.Schema("Sub", subSchema)
